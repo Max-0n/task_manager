@@ -1,24 +1,23 @@
-# task_manager
+### [Demo](https://max-0n.github.io/task_manager/)
 
-## Project setup
-```
-npm install
-```
+![Build with love](http://forthebadge.com/images/badges/built-with-love.svg)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+![Gluten free](https://forthebadge.com/images/badges/gluten-free.svg) ![Makes people smile](https://forthebadge.com/images/badges/makes-people-smile.svg) ![Contains cat gifs](https://forthebadge.com/images/badges/contains-cat-gifs.svg)
 
-### Compiles and minifies for production
+![Made with pug](https://forthebadge.com/images/badges/made-with-pug.svg) ![Made with JS](https://forthebadge.com/images/badges/made-with-javascript.svg)
+
+![Uses git](https://forthebadge.com/images/badges/uses-git.svg)
+
+[![Pump simulator](./preview.gif)](https://max-0n.github.io/task_manager/)
+
+# Task manager
+
+## Build project
 ```
 npm run build
 ```
 
-### Lints and fixes files
+## Run in development mode
 ```
-npm run lint
+npm start
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

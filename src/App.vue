@@ -1,26 +1,40 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<template lang="pug">
+TheHeader
+section
+  .card_wrapper(v-for="card in cards", :key="card.id")
+    Card(:card="card")
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import TheHeader from './components/TheHeader.vue';
+import Card from './components/Card.vue';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld,
+  components: { TheHeader, Card },
+  mounted() {
+    this.$store.dispatch('getCards');
+    this.$store.dispatch('getTasks');
+  },
+  computed: {
+    cards() {
+      return Object.values(Object.fromEntries([...this.$store.state.cards]));
+    },
   },
 };
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped lang="scss">
+section {
+  display: flex;
+  overflow-x: auto;
+  padding: 0;
+  min-height: 100vh;
+  box-sizing: content-box;
+
+  .card_wrapper {
+    padding: 60px 7px 14px 0px;
+    &:first-child { padding-left: 7px; }
+  }
 }
 </style>
