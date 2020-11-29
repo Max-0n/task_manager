@@ -142,7 +142,6 @@ $doneBg: #a4ffe3;
     font-weight: 900;
     color: rgb(39,99,148);
     padding: 14px;
-    // background: rgba(0,0,0,.3);
   }
 
   &__progress {

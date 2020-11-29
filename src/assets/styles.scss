@@ -1,8 +1,6 @@
 html {
   min-height: 100%;
   color: #2c3e50;
-  // background-color: white;
-
   background: linear-gradient(0deg, rgba(87,239,255,1) 0%, rgba(41,167,235,1) 100%);;
   transition: background-color 1s ease-in-out, filter 1s ease-in-out;
 
@@ -13,19 +11,6 @@ html {
   &.red { background-color: #f54242; }
   &.yellow { background-color: #f5b342; }
   &.green { background-color: #78f542; }
-
-  // @media (prefers-color-scheme: dark) {
-  //   background-color: rgb(2,25,40);
-  //   filter: brightness(.6) grayscale(.5);
-  //
-  //   &.cyan { background-color: #136f88; }
-  //   &.blue { background-color: #1b26a7; }
-  //   &.purple { background-color: #65107d; }
-  //   &.pink { background-color: #951557; }
-  //   &.red { background-color: #941616; }
-  //   &.yellow { background-color: #996917; }
-  //   &.green { background-color: #2d770d; }
-  // }
 }
 
 body {
