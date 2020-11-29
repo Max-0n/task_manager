@@ -7,7 +7,7 @@ nav
 export default {
   name: 'TheHeader',
   methods: {
-    addCard() { this.$store.dispatch('setCard', { title: 'Title of Card' }); },
+    addCard() { this.$store.dispatch('setCard', {}); },
   },
 };
 </script>

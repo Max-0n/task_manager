@@ -12,7 +12,7 @@ export default createStore({
     },
     setCard: ({ state }, { cardId, title }) => {
       if (cardId && state.cards.has(cardId)) {
-        state.cards.get(cardId).title = title;
+        state.cards.get(cardId).title = title || null;
       } else {
         let newCardId;
         do { newCardId = `${Math.random()}`; }
@@ -20,7 +20,7 @@ export default createStore({
 
         state.cards.set(newCardId, {
           id: newCardId,
-          title: title || 'Empty',
+          title: title || null,
           taskList: [],
         });
       }

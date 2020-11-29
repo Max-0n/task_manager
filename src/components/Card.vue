@@ -6,7 +6,11 @@
 
   .card__title(v-if="!showEditor", @click="showEditor = true") {{ card.title }}
   .card__editor(v-else)
-    input(type="text", v-model="title")
+    input(
+      ref="title",
+      type="text",
+      v-model="title",
+      placeholder="Title of card")
     button.save(@click="save") Save
     button.cancel(@click="close") Cancel
 
@@ -34,6 +38,12 @@ export default {
   name: 'Card',
   components: { UIRange, Task },
   props: { card: Object },
+  mounted() {
+    if (this.card.title === null) {
+      this.showEditor = true;
+      this.$nextTick(() => { this.$refs.title.focus(); });
+    }
+  },
   data() {
     return {
       showEditor: false,
@@ -110,77 +120,77 @@ $inProgress: #53bae0;
 $review: #ebcc71;
 $done: #16d99e;
 
-  .card {
-    flex: 0 0 auto;
-    flex-direction: column;
-    max-width: 300px;
-    min-width: 300px;
-    box-sizing: border-box;
-    background: white;
-    margin: auto;
-    border-radius: 7px;
-    background-color: rgba(255,255,255,.85);
-    border: 3px solid rgba(0,0,0,.1);
-    backdrop-filter: blur(5px) brightness(150%);
+.card {
+  flex: 0 0 auto;
+  flex-direction: column;
+  max-width: 300px;
+  min-width: 300px;
+  box-sizing: border-box;
+  background: white;
+  margin: auto;
+  border-radius: 7px;
+  background-color: rgba(255,255,255,.85);
+  border: 3px solid rgba(0,0,0,.1);
+  backdrop-filter: blur(5px) brightness(150%);
 
-    &__menu {
-      position: absolute;
-      top: 0;
-      right: 0;
-      opacity: .1;
-      transition: opacity .3s ease-in-out;
-      &:hover { opacity: 1; }
-    }
+  &__menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: .1;
+    transition: opacity .3s ease-in-out;
+    &:hover { opacity: 1; }
+  }
 
-    &__title {
-      cursor: pointer;
+  &__title {
+    cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: rgb(39,99,148);
+    padding: 14px;
+    // background: rgba(0,0,0,.3);
+  }
+
+  &__progress {
+    display: flex;
+    height: 14px;
+    width: calc(100% - 14px);
+    margin: 7px 7px 14px;
+    background: $todoBg;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all .3s ease-in-out;
+
+    & > * { width: calc(100%); }
+
+    &__todo { background-color: $todo; }
+    &__inprogress { background-color: $inProgress; }
+    &__review { background-color: $review; }
+    &__done { background-color: $done; }
+  }
+
+  &__editor {
+    padding: 7px;
+
+    input[type=text] {
       font-size: 1.3rem;
       font-weight: 900;
       color: rgb(39,99,148);
-      padding: 14px;
-      // background: rgba(0,0,0,.3);
+      width: 100%;
+      box-sizing: border-box;
     }
 
-    &__progress {
-      display: flex;
-      height: 14px;
-      width: calc(100% - 14px);
-      margin: 7px 7px 14px;
-      background: $todoBg;
-      border-radius: 10px;
-      overflow: hidden;
-      transition: all .3s ease-in-out;
+    button { margin-top: 7px; }
+  }
 
-      & > * { width: calc(100%); }
-
-      &__todo { background-color: $todo; }
-      &__inprogress { background-color: $inProgress; }
-      &__review { background-color: $review; }
-      &__done { background-color: $done; }
+  &__tasks {
+    & > .task {
+      padding: 12px 6px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
-
-    &__editor {
-      padding: 7px;
-
-      input[type=text] {
-        font-size: 1.3rem;
-        font-weight: 900;
-        color: rgb(39,99,148);
-        width: 100%;
-        box-sizing: border-box;
-      }
-
-      button { margin-top: 7px; }
-    }
-
-    &__tasks {
-      & > .task {
-        padding: 12px 6px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      }
-      & > button {
-        margin: 14px;
-      }
+    & > button {
+      margin: 14px;
     }
   }
+}
 </style>

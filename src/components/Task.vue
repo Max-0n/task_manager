@@ -12,7 +12,7 @@
     button.sm.cancel(@click="delete") Delete
   .task__title(v-if="!showEditor", @click="showEditor = true", v-html="description")
   .task__actions(v-else)
-    textarea(ref="description", v-model="description")
+    textarea(ref="description", v-model="description", placeholder="Task description...")
     .task__actions__status
       label {{ statusName }}
       UIRange(v-model="status", :val="status")
