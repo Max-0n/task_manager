@@ -1,8 +1,9 @@
 <template lang="pug">
 TheHeader
 section
-  .card_wrapper(v-for="card in cards", :key="card.id")
+  .wrapper(v-for="card in cards", :key="card.id")
     Card(:card="card")
+  .banner(v-if="cards.length == 0") &uarr;#[br]Add first card.
 </template>
 
 <script>
@@ -32,9 +33,26 @@ section {
   min-height: 100vh;
   box-sizing: content-box;
 
-  .card_wrapper {
+  .wrapper {
     padding: 60px 7px 14px 0px;
     &:first-child { padding-left: 7px; }
   }
+
+  .banner {
+    position: absolute;
+    top: 60px;
+    left: 14px;
+    color: #fff;
+    font-size: 2.8rem;
+    font-weight: 700;
+    opacity: .9;
+    animation: shake 1s infinite ease-in-out;
+  }
+}
+
+@keyframes shake {
+  0% { transform: translateY(30px); }
+  50% { transform: translateY(0px); }
+  100% { transform: translateY(30px); }
 }
 </style>

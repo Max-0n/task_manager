@@ -1,5 +1,9 @@
 <template lang="pug">
-.card
+.card(:class=`{
+    card_inprogress: inProgress != '0%' && todo == '0%',
+    card_review: review != '0%' && todo == '0%' && inProgress == '0%',
+    card_done: done != '0%' && review == '0%' && todo == '0%' && inProgress == '0%',
+  }`)
   .card__menu(v-if="!showEditor")
     button.sm(@click="showEditor = true") Edit
     button.sm.cancel(@click="delete") Delete
@@ -63,52 +67,23 @@ export default {
     delete() {
       this.$store.dispatch('deleteCard', this.card.id);
     },
+    countHandler(status) {
+      let count = 0;
+      this.card.taskList.forEach((taskID) => {
+        if (this.$store.state.tasks.get(taskID).status === status) {
+          count += 1;
+        }
+      });
+
+      if (this.card.taskList.length === 0 || count === 0) return '0%';
+      return `${(100 / this.card.taskList.length) * count}%`;
+    },
   },
   computed: {
-    todo() {
-      let count = 0;
-      this.card.taskList.forEach((taskID) => {
-        if (this.$store.state.tasks.get(taskID).status === '1') {
-          count += 1;
-        }
-      });
-
-      if (this.card.taskList.length === 0 || count === 0) return '0%';
-      return `${(100 / this.card.taskList.length) * count}%`;
-    },
-    inProgress() {
-      let count = 0;
-      this.card.taskList.forEach((taskID) => {
-        if (this.$store.state.tasks.get(taskID).status === '2') {
-          count += 1;
-        }
-      });
-
-      if (this.card.taskList.length === 0 || count === 0) return '0%';
-      return `${(100 / this.card.taskList.length) * count}%`;
-    },
-    review() {
-      let count = 0;
-      this.card.taskList.forEach((taskID) => {
-        if (this.$store.state.tasks.get(taskID).status === '3') {
-          count += 1;
-        }
-      });
-
-      if (this.card.taskList.length === 0 || count === 0) return '0%';
-      return `${(100 / this.card.taskList.length) * count}%`;
-    },
-    done() {
-      let count = 0;
-      this.card.taskList.forEach((taskID) => {
-        if (this.$store.state.tasks.get(taskID).status === '4') {
-          count += 1;
-        }
-      });
-
-      if (this.card.taskList.length === 0 || count === 0) return '0%';
-      return `${(100 / this.card.taskList.length) * count}%`;
-    },
+    todo() { return this.countHandler('1'); },
+    inProgress() { return this.countHandler('2'); },
+    review() { return this.countHandler('3'); },
+    done() { return this.countHandler('4'); },
   },
 };
 </script>
@@ -117,8 +92,11 @@ export default {
 $todo: #abc3d0;
 $todoBg: #e0eef6;
 $inProgress: #53bae0;
+$inProgressBg: #d7f4ff;
 $review: #ebcc71;
+$reviewBg: #ffedb8;
 $done: #16d99e;
+$doneBg: #a4ffe3;
 
 .card {
   flex: 0 0 auto;
@@ -132,6 +110,22 @@ $done: #16d99e;
   background-color: rgba(255,255,255,.85);
   border: 3px solid rgba(0,0,0,.1);
   backdrop-filter: blur(5px) brightness(150%);
+
+  &_inprogress {
+    background-color: $inProgressBg;
+    .card__tasks > button { background-color: $inProgress; }
+  }
+  &_review {
+    background-color: $reviewBg;
+    .card__tasks > button { background-color: $review; }
+  }
+  &_done {
+    background-color: $doneBg;
+    .card__tasks > button { background-color: $done; }
+    opacity: .3;
+    transition: opacity .3s ease-in-out;
+    &:hover { opacity: 1; }
+  }
 
   &__menu {
     position: absolute;
@@ -188,9 +182,7 @@ $done: #16d99e;
       padding: 12px 6px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
-    & > button {
-      margin: 14px;
-    }
+    & > button { margin: 14px; }
   }
 }
 </style>
